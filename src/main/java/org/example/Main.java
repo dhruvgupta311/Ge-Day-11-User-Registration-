@@ -1,37 +1,51 @@
 package org.example;
 
-import java.util.Scanner;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Create a Scanner object to get user input
-        Scanner scanner = new Scanner(System.in);
 
-        // Regex pattern for password validation (including all 4 rules)
-        String r1 = ".{8,}"; // Minimum 8 characters
-        String r2 = "(?=.*[A-Z]).*"; // At least one uppercase letter
-        String r3 = "(?=.*[0-9]).*"; // At least one numeric number
-        String r4 = "(?=.*[@#$%^&+=!]).*"; // At least one special character
-        // Prompt user to enter a valid password
-        System.out.println("Please enter your password (Minimum 8 characters, at least 1 uppercase letter, 1 numeric digit, and exactly 1 special character):");
+        // List of email samples (both valid and invalid)
+        List<String> emailSamples = List.of(
+                // Valid Emails
+                "abc@yahoo.com",         // Valid
+                "abc-100@yahoo.com",     // Valid
+                "abc.100@yahoo.com",     // Valid
+                "abc111@abc.com",        // Valid
+                "abc-100@abc.net",       // Valid
+                "abc.100@abc.com.au",    // Valid
+                "abc@1.com",             // Valid
+                "abc@gmail.com.com",     // Valid
+                "abc+100@gmail.com",     // Valid
 
-        // Read input from user
-        String password = scanner.nextLine();
+                // Invalid Emails
+                "abc",                   // Invalid - Missing "@" symbol
+                "abc@.com.my",           // Invalid - TLD starts with a dot
+                "abc123@gmail.a",        // Invalid - TLD must have at least two characters
+                "abc123@.com",           // Invalid - TLD starts with a dot
+                "abc123@.com.com",       // Invalid - TLD starts with a dot
+                ".abc@abc.com",          // Invalid - First character is a dot
+                "abc()*@gmail.com",      // Invalid - Contains invalid characters
+                "abc@%*.com",            // Invalid - TLD contains invalid characters
+                "abc..2002@gmail.com",   // Invalid - Contains double dots
+                "abc.@gmail.com",        // Invalid - Ends with a dot
+                "abc@abc@gmail.com",     // Invalid - Contains multiple "@" symbols
+                "abc@gmail.com.1a",      // Invalid - TLD with two characters contains a digit
+                "abc@gmail.com.aa.au"    // Invalid - Multiple TLDs are not allowed
+        );
 
-        // Validate password using regex pattern
-        if (Pattern.matches(r4, password) && Pattern.matches(r3, password)
-                && Pattern.matches(r2, password) && Pattern.matches(r1, password)) {
-            System.out.println("Valid password.");
-        } else {
-            System.out.println("Invalid password. Please follow these rules:");
-            System.out.println("1. Minimum 8 characters.");
-            System.out.println("2. At least 1 uppercase letter.");
-            System.out.println("3. At least 1 numeric digit.");
-            System.out.println("4. Exactly 1 special character.");
+        // Regular Expression for valid email validation
+        String emailPattern = "^[a-zA-Z0-9]+([._+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$";
+
+        // Check each email sample
+        for (String email : emailSamples) {
+            if (Pattern.matches(emailPattern, email)) {
+                System.out.println("Valid email: " + email);
+            } else {
+                System.out.println("Invalid email: " + email);
+            }
         }
-
-        // Close the scanner
-        scanner.close();
     }
 }
