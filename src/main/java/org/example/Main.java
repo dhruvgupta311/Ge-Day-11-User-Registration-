@@ -8,19 +8,19 @@ public class Main {
         // Create a Scanner object to get user input
         Scanner scanner = new Scanner(System.in);
 
-        // Regex pattern for Email validation
-        String emailPattern = "^[a-zA-Z0-9]+([._+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$";
-        // Prompt user to enter a valid email
-        System.out.println("Please enter your email address:");
+        // Regex pattern for Mobile Number validation
+        String mobilePattern = "^\\d{2} \\d{10}$"; // Country code followed by space and 10 digits
+        // Prompt user to enter a valid mobile number
+        System.out.println("Please enter your mobile number ");
 
         // Read input from user
-        String email = scanner.nextLine();
+        String mobileNumber = scanner.nextLine();
 
-        // Validate email using regex pattern
-        if (Pattern.matches(emailPattern, email)) {
-            System.out.println("Valid email: " + email);
+        // Validate mobile number using regex pattern
+        if (Pattern.matches(mobilePattern, mobileNumber)) {
+            System.out.println("Valid mobile number: " + mobileNumber);
         } else {
-            System.out.println("Invalid email. Please enter a valid email in the format abc.xyz@bl.co.in.");
+            System.out.println("Invalid mobile number. Please enter a valid mobile number in the format 91 9919819801.");
         }
 
         // Close the scanner
