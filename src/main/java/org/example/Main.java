@@ -1,13 +1,81 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class Main {
 
-    public static void main(String[] args) {
+    // Method to check if the first name is valid
+    public boolean isFirstNameValid(String firstName) {
+        String firstNamePattern = "^[A-Z][a-zA-Z]{2,}$"; // Starts with uppercase and at least 3 characters
+        return firstName.matches(firstNamePattern);
+    }
 
-        // List of email samples (both valid and invalid)
+    // Method to check if the last name is valid
+    public boolean isLastNameValid(String lastName) {
+        String lastNamePattern = "^[A-Z][a-zA-Z]{2,}$"; // Starts with uppercase and at least 3 characters
+        return lastName.matches(lastNamePattern);
+    }
+
+    // Method to check if the email is valid
+    public boolean isEmailValid(String email) {
+        String emailPattern = "^[a-zA-Z0-9]+([._+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$"; // Valid email regex
+        return email.matches(emailPattern);
+    }
+
+    // Method to check if the mobile number is valid
+    public boolean isMobileNumberValid(String mobileNumber) {
+        String mobilePattern = "^[0-9]{1,3} [0-9]{10}$"; // Country code followed by space and 10-digit number
+        return mobileNumber.matches(mobilePattern);
+    }
+
+    // Method to check if the password meets all security requirements
+    public boolean isPasswordSecure(String password) {
+        String minLength = ".{8,}"; // Minimum 8 characters
+        String hasUpperCase = "(?=.*[A-Z]).*"; // At least one uppercase letter
+        String hasNumber = "(?=.*[0-9]).*"; // At least one numeric number
+        String hasSpecialChar = "(?=.*[@#$%^&+=!]).*"; // At least one special character
+
+        return password.matches(minLength) &&
+                password.matches(hasUpperCase) &&
+                password.matches(hasNumber) &&
+                password.matches(hasSpecialChar);
+    }
+
+    // Method to validate a list of emails
+    public List<Boolean> validateEmailList(List<String> emails) {
+        List<Boolean> results = new ArrayList<>();
+        for (String email : emails) {
+            results.add(isEmailValid(email));
+        }
+        return results;
+    }
+
+    public static void main(String[] args) {
+        Main userRegistration = new Main();
+
+        // Test the methods
+        System.out.println("First Name Validation:");
+        System.out.println(userRegistration.isFirstNameValid("John")); // Should return true
+        System.out.println(userRegistration.isFirstNameValid("jo"));   // Should return false
+
+        System.out.println("Last Name Validation:");
+        System.out.println(userRegistration.isLastNameValid("Doe"));  // Should return true
+        System.out.println(userRegistration.isLastNameValid("do"));   // Should return false
+
+        System.out.println("Email Validation:");
+        System.out.println(userRegistration.isEmailValid("abc.xyz@bl.co.in")); // Should return true
+        System.out.println(userRegistration.isEmailValid("abc@.com.my"));     // Should return false
+
+        System.out.println("Mobile Number Validation:");
+        System.out.println(userRegistration.isMobileNumberValid("91 9919819801")); // Should return true
+        System.out.println(userRegistration.isMobileNumberValid("919919819801"));  // Should return false
+
+        // Test Password
+        System.out.println("Password Validation:");
+        System.out.println(userRegistration.isPasswordSecure("Abc@1234")); // Should return true
+        System.out.println(userRegistration.isPasswordSecure("abc1234")); // Should return false
+
         List<String> emailSamples = List.of(
                 // Valid Emails
                 "abc@yahoo.com",         // Valid
@@ -36,16 +104,8 @@ public class Main {
                 "abc@gmail.com.aa.au"    // Invalid - Multiple TLDs are not allowed
         );
 
-        // Regular Expression for valid email validation
-        String emailPattern = "^[a-zA-Z0-9]+([._+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$";
+        System.out.println("Email Samples Validation:");
+        System.out.println(userRegistration.validateEmailList(emailSamples));
 
-        // Check each email sample
-        for (String email : emailSamples) {
-            if (Pattern.matches(emailPattern, email)) {
-                System.out.println("Valid email: " + email);
-            } else {
-                System.out.println("Invalid email: " + email);
-            }
-        }
     }
 }
