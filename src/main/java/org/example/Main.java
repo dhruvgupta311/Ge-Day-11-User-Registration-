@@ -1,17 +1,30 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // Create a Scanner object to get user input
+        Scanner scanner = new Scanner(System.in);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        // Regex pattern for First Name validation (Starts with Capital and at least 3 characters)
+        String firstNamePattern = "^[A-Z][a-zA-Z]{2,}$";
+
+        // Prompt user to enter a valid first name
+        System.out.println("Please enter your first name:");
+
+        // Read input from user
+        String firstName = scanner.nextLine();
+
+        // Check if the input matches the regex pattern
+        if (Pattern.matches(firstNamePattern, firstName)) {
+            System.out.println("Valid first name: " + firstName);
+        } else {
+            System.out.println("Invalid first name. Please ensure it starts with a capital letter and has at least 3 characters.");
         }
+
+        // Close the scanner
+        scanner.close();
     }
 }
